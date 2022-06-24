@@ -15,6 +15,10 @@ Digest: sha256:1c749e31a05a6d025524853de7baa6a0c4fc16e573a99e518ffb12a7226fe28d
 Status: Downloaded newer image for registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:latest
 registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:latest
 ```
+# Update: correccion
+
+No me quedo muy en claro en la documentacion como utilizarlo, tuve que leer el [Dockerfile](https://catalog.redhat.com/software/containers/redhat-openjdk-18/openjdk18-openshift/58ada5701fbe981673cd6b10?container-tabs=dockerfile) para determinar que habia unos argumentos y variables de entorno que definen que usa los `*.jar` en la carpeta `/deployments` y en la [Informacion tecnica](https://catalog.redhat.com/software/containers/redhat-openjdk-18/openjdk18-openshift/58ada5701fbe981673cd6b10?container-tabs=technical-information&gti-tabs=get-the-source) que expone los puertos 8080, 8443 y 8778.
+Por lo tanto hice el fix en el Dockerfile.
 
 ## Dockerfile
 Para hacer el Dockerfile lo único que cambia respecto al ejercicio4 es el `FROM` ya que vamos a usar la imagen de redhat
