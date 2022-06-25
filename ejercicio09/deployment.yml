@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ejercicio09
+  name: ejercicio09
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ejercicio09
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ejercicio09
+    spec:
+      containers:
+      - image: nicopaez/password-api
+        name: password-api
+        resources: {}
+status: {}
