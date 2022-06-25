@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ejercicio10
+  name: ejercicio10
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ejercicio10
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ejercicio10
+    spec:
+      containers:
+      - image: nicopaez/telegrambot:0.0.7
+        name: telegrambot
+        env:
+        - name: TELEGRAM_TOKEN
+          value: 545<<HIDDEN>>BVM
