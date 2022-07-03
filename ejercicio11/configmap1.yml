@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ejercicio11-c1
+  labels:
+    app: ejercicio11
+data:
+  CONFIG_LOCATION: /mydata/config.json
+  SECRETS_LOCATION: /mysecrets/secret.json
