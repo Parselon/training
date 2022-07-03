@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webdb
+  labels:
+    app: jobvacancy
+    component: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jobvacancy
+      component: db
+  template:
+    metadata:
+      labels:
+        app: jobvacancy
+        component: db
+    spec:
+      containers:
+      - name: webdb
+        image: postgres:10.4
+        ports:
+        - containerPort: 5432         
+        envFrom:
+          - secretRef:
+              name: jobvacancydbsecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  labels:
+    app: jobvacancy
+    component: db
+spec:
+  type: ClusterIP
+  ports:
+  - port: 5432
+  selector:
+    app: jobvacancy
+    component: db
