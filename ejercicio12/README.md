@@ -1,6 +1,6 @@
 # Ejercicio 12
 
-Luego de leer sobre lo minimo necesario para levantar un postgres en docker, https://hub.docker.com/_/postgres decidi setear solamente la variable de entorno POSTGRES_PASSWORD -> password1, y lo demas dejarlo por defecto.
+Luego de leer sobre lo minimo necesario para levantar un postgres en docker, https://hub.docker.com/_/postgres decidi setear solamente la variable de entorno `POSTGRES_PASSWORD -> password1`, y lo demas dejarlo por defecto.
 
 Cree el configmap y los secrets necesarios para los proyectos (los nombres salen del manifest que ya existe), y cree un secret extra para el deployment de la db.
 Para hacerlo tuve que transformar tanto el password como el string de conexion a la db a base64
@@ -19,6 +19,24 @@ Aplique todo eso, y luego aplique el web_deployment.yml
 Para poder acceder a la app, hice el servicio correspondiente (nodeport al puerto 30444).
 
 Mire los logs del pod y parecia estar haciendo alguna migracion:
+```bash
+$ kubectl get all
+NAME                              READY   STATUS    RESTARTS   AGE
+pod/webdb-8648c6d84c-cvzjx        1/1     Running   0          21m
+pod/jobvacancy-6774768487-z22m7   1/1     Running   0          19m
+
+NAME                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+service/db            ClusterIP   10.152.183.218   <none>        5432/TCP         21m
+service/web-service   NodePort    10.152.183.156   <none>        3000:30444/TCP   7m50s
+
+NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/webdb        1/1     1            1           21m
+deployment.apps/jobvacancy   1/1     1            1           19m
+
+NAME                                    DESIRED   CURRENT   READY   AGE
+replicaset.apps/webdb-8648c6d84c        1         1         1       21m
+replicaset.apps/jobvacancy-6774768487   1         1         1       19m
+```
 ```bash
 $ kubectl logs pod/jobvacancy-6774768487-z22m7
 I, [2022-07-03T23:09:54.167076 #6]  INFO -- : (0.000609s) SELECT CAST(current_setting('server_version_num') AS integer) AS v
