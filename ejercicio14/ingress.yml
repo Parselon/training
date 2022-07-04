@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ejercicio14
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: public
+  rules:
+  - http:
+      paths:
+      - path: /pingapp
+        pathType: Prefix
+        backend:
+          service:
+            name: pingapp
+            port:
+              number: 4567
+      - path: /passwordapi
+        pathType: Prefix
+        backend:
+          service:
+            name: password-api
+            port:
+              number: 3000
