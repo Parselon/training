@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ejercicio13
+  name: ejercicio13
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ejercicio13
+  template:
+    metadata:
+      labels:
+        app: ejercicio13
+    spec:
+      containers:
+      - image: nicopaez/password-api:1.5.0-java
+        name: password-api
+        ports:
+        - name: passwordapip
+          containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: passwordapip
+            httpHeaders:
+            - name: Custom-Header
+              value: Liveness
+          initialDelaySeconds: 15
+          successThreshold: 1
+          failureThreshold: 1
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: passwordapip
+            httpHeaders:
+            - name: Custom-Header
+              value: Readiness
+          initialDelaySeconds: 5
+          successThreshold: 1
+          failureThreshold: 1
+          periodSeconds: 3
+        startupProbe:
+          httpGet:
+            path: /actuator/health
+            port: passwordapip
+            httpHeaders:
+            - name: Custom-Header
+              value: StartUp
+          failureThreshold: 5
+          periodSeconds: 10
